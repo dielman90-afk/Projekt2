@@ -4,5 +4,5 @@ __pycache__/
 .venv/
 venv/
 *.pdf
-!docs/sample_report.pdf
+!demo_money_flow_report.pdf
 .DS_Store

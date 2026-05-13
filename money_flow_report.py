@@ -149,10 +149,13 @@ def classify_regime(snap: MarketSnapshot) -> tuple[str, str, list[str]]:
     return regime, color, signals
 
 
-def page_cover(pdf: PdfPages, snap: MarketSnapshot) -> None:
+def page_cover(pdf: PdfPages, snap: MarketSnapshot, demo: bool = False) -> None:
     regime, color, signals = classify_regime(snap)
     fig = plt.figure(figsize=(8.27, 11.69))
     fig.suptitle("Money-Flow-Report", fontsize=26, fontweight="bold", y=0.95)
+    if demo:
+        fig.text(0.5, 0.91, "— DEMO mit synthetischen Daten —",
+                 ha="center", fontsize=11, color="#c0392b", fontweight="bold")
 
     ax = fig.add_axes([0.1, 0.0, 0.8, 0.85])
     ax.axis("off")
@@ -318,9 +321,9 @@ def page_macro(pdf: PdfPages, snap: MarketSnapshot) -> None:
     pdf.savefig(fig); plt.close(fig)
 
 
-def build_pdf(snap: MarketSnapshot, output: Path) -> None:
+def build_pdf(snap: MarketSnapshot, output: Path, demo: bool = False) -> None:
     with PdfPages(output) as pdf:
-        page_cover(pdf, snap)
+        page_cover(pdf, snap, demo=demo)
         page_ratios(pdf, snap)
         page_sectors(pdf, snap)
         page_crypto_metals(pdf, snap)
